@@ -37,7 +37,6 @@
       overflow-x: hidden;
     }
 
-    /* Dotty background */
     body::before {
       content: '';
       position: fixed;
@@ -48,7 +47,6 @@
       z-index: 0;
     }
 
-    /* Decorative blobs */
     body::after {
       content: '';
       position: fixed;
@@ -229,6 +227,7 @@
       transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1);
       box-shadow: var(--shadow);
       animation: popIn 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+      cursor: pointer;
     }
 
     .project:hover {
@@ -237,7 +236,6 @@
       border-color: var(--border-bright);
     }
 
-    /* Pastel stripe top edge */
     .project::before {
       content: '';
       position: absolute;
@@ -254,20 +252,38 @@
     .project:nth-child(2)::before { background: linear-gradient(90deg, var(--blue), var(--mint)); }
     .project:nth-child(3)::before { background: linear-gradient(90deg, var(--mint), var(--yellow)); }
     .project:nth-child(4)::before { background: linear-gradient(90deg, var(--pink), var(--lilac)); }
+    .project:nth-child(5)::before { background: linear-gradient(90deg, var(--yellow), var(--mint)); }
 
-    /* Corner doodle */
-    .project::after {
-      content: '✦';
+    /* Click-to-expand arrow indicator */
+    .expand-icon {
       position: absolute;
-      top: 1rem; right: 1.2rem;
-      font-size: 0.9rem;
-      color: var(--border);
-      transition: color 0.25s, transform 0.3s;
+      top: 1.1rem;
+      right: 1.2rem;
+      width: 26px;
+      height: 26px;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--lilac);
+      font-size: 0.65rem;
+      transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
     }
 
-    .project:hover::after {
-      color: var(--lilac);
-      transform: rotate(30deg) scale(1.2);
+    .project:hover .expand-icon {
+      background: var(--lilac);
+      border-color: var(--lilac);
+      color: white;
+      transform: scale(1.1);
+    }
+
+    .project.open .expand-icon {
+      background: var(--lilac);
+      border-color: var(--lilac);
+      color: white;
+      transform: rotate(180deg);
     }
 
     .project-header {
@@ -277,6 +293,7 @@
       gap: 1rem;
       margin-bottom: 0.7rem;
       flex-wrap: wrap;
+      padding-right: 2.2rem;
     }
 
     .project-title {
@@ -307,7 +324,6 @@
       font-weight: 300;
     }
 
-    /* Stat pills */
     .project-stats {
       display: flex;
       gap: 0.5rem;
@@ -326,7 +342,6 @@
       font-weight: 500;
     }
 
-    /* Tags */
     .tags {
       display: flex;
       gap: 0.4rem;
@@ -349,7 +364,6 @@
       color: white;
     }
 
-    /* GitHub link */
     .project-link {
       display: inline-flex;
       align-items: center;
@@ -376,6 +390,136 @@
     .project-link svg {
       width: 13px; height: 13px;
       fill: currentColor;
+    }
+
+    /* ── Expandable Details Panel ── */
+    .project-details {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s cubic-bezier(0.4,0,0.2,1), opacity 0.4s ease;
+      opacity: 0;
+    }
+
+    .project.open .project-details {
+      max-height: 1200px;
+      opacity: 1;
+    }
+
+    .details-inner {
+      border-top: 1.5px solid var(--border);
+      margin-top: 1.2rem;
+      padding-top: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .details-section-title {
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.55rem;
+    }
+
+    .details-text {
+      font-size: 0.76rem;
+      color: #7a6fa8;
+      line-height: 1.85;
+      font-weight: 300;
+    }
+
+    /* Key findings grid */
+    .findings-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+    }
+
+    .finding-card {
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 0.9rem 1rem;
+      transition: all 0.2s;
+    }
+
+    .finding-card:hover {
+      border-color: var(--border-bright);
+      transform: translateY(-2px);
+    }
+
+    .finding-value {
+      font-family: 'Nunito', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .finding-label {
+      font-size: 0.62rem;
+      color: var(--muted);
+      line-height: 1.4;
+      font-weight: 400;
+    }
+
+    /* Approach pills */
+    .approach-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .approach-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.7rem;
+      font-size: 0.74rem;
+      color: #7a6fa8;
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    .approach-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--lilac), var(--blue));
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+
+    /* Paper link */
+    .paper-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.68rem;
+      color: var(--pink);
+      text-decoration: none;
+      background: rgba(244,167,195,0.1);
+      border: 1px solid rgba(244,167,195,0.3);
+      border-radius: 100px;
+      padding: 0.28rem 0.8rem;
+      transition: all 0.2s cubic-bezier(0.34,1.56,0.64,1);
+    }
+
+    .paper-link:hover {
+      background: var(--pink);
+      color: white;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(244,167,195,0.35);
+    }
+
+    .detail-links {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
     }
 
     /* ── Experience ── */
@@ -416,7 +560,6 @@
       font-size: 0.63rem;
       color: var(--muted);
       text-align: right;
-      padding-top: 3px;
       background: var(--bg);
       border: 1px solid var(--border);
       border-radius: 100px;
@@ -429,6 +572,194 @@
       font-size: 0.72rem;
       color: var(--muted);
       grid-column: 1;
+    }
+
+    /* ── Expandable experience ── */
+    .exp-item.expandable {
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .exp-item.expandable .exp-top {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 0.2rem 0.6rem;
+      align-items: start;
+    }
+
+    .exp-item.expandable .exp-top .exp-role {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .exp-item.expandable .exp-top .exp-date {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .exp-item.expandable .exp-top .exp-org {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    .exp-expand-icon {
+      grid-column: 3;
+      grid-row: 1;
+      width: 26px;
+      height: 26px;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--lilac);
+      font-size: 0.65rem;
+      transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+      flex-shrink: 0;
+      align-self: start;
+    }
+
+    .exp-item.expandable:hover .exp-expand-icon {
+      background: var(--lilac);
+      border-color: var(--lilac);
+      color: white;
+      transform: scale(1.1);
+    }
+
+    .exp-item.expandable.open .exp-expand-icon {
+      background: var(--lilac);
+      border-color: var(--lilac);
+      color: white;
+      transform: rotate(180deg);
+    }
+
+    .exp-details {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s cubic-bezier(0.4,0,0.2,1), opacity 0.4s ease;
+      opacity: 0;
+    }
+
+    .exp-item.open .exp-details {
+      max-height: 1400px;
+      opacity: 1;
+    }
+
+    .exp-details-inner {
+      border-top: 1.5px solid var(--border);
+      margin-top: 1rem;
+      padding-top: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+
+    /* ── Image Gallery ── */
+    /*
+     * USAGE TEMPLATES — paste inside any .details-inner or .exp-details-inner:
+     *
+     * 2 images:
+     *   <div class="img-gallery cols-2"> ... </div>
+     *
+     * 3 images:
+     *   <div class="img-gallery cols-3"> ... </div>
+     *
+     * 4 images:
+     *   <div class="img-gallery cols-4"> ... </div>
+     *
+     * 2 images, one tall (portrait) + one wide:
+     *   <div class="img-gallery cols-2-asymmetric"> ... </div>
+     *
+     * Each child:
+     *   <div class="img-item">
+     *     <img src="YOUR_IMAGE.jpg" alt="Description" />
+     *     <p class="img-caption">Optional caption</p>
+     *   </div>
+     *
+     * Or for a full-width single image:
+     *   <div class="img-gallery cols-1">
+     *     <div class="img-item">
+     *       <img src="YOUR_IMAGE.jpg" alt="Description" />
+     *       <p class="img-caption">Optional caption</p>
+     *     </div>
+     *   </div>
+     */
+
+    .img-gallery {
+      display: grid;
+      gap: 10px;
+    }
+
+    .img-gallery.cols-1 { grid-template-columns: 1fr; }
+    .img-gallery.cols-2 { grid-template-columns: 1fr 1fr; }
+    .img-gallery.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+    .img-gallery.cols-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+
+    /* First image tall, second wide — good for a screenshot + diagram combo */
+    .img-gallery.cols-2-asymmetric {
+      grid-template-columns: 1fr 1.6fr;
+    }
+
+    /* First image full-width banner, rest below in equal columns */
+    .img-gallery.cols-banner-then-2 {
+      grid-template-columns: 1fr 1fr;
+    }
+    .img-gallery.cols-banner-then-2 .img-item:first-child {
+      grid-column: 1 / -1;
+    }
+    .img-gallery.cols-banner-then-3 {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+    .img-gallery.cols-banner-then-3 .img-item:first-child {
+      grid-column: 1 / -1;
+    }
+
+    .img-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1.5px solid var(--border);
+      background: var(--bg);
+      transition: all 0.22s cubic-bezier(0.34,1.56,0.64,1);
+    }
+
+    .img-item:hover {
+      border-color: var(--border-bright);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .img-item img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* For taller portrait images */
+    .img-item.tall img { height: 220px; }
+    /* For shorter landscape/banner images */
+    .img-item.short img { height: 110px; }
+    /* Auto height — image fills naturally without cropping */
+    .img-item.auto img { height: auto; }
+
+    .img-caption {
+      font-size: 0.6rem;
+      color: var(--muted);
+      line-height: 1.5;
+      padding: 0 0.7rem 0.6rem;
+      font-weight: 300;
+    }
+
+    @media (max-width: 600px) {
+      .img-gallery.cols-3,
+      .img-gallery.cols-4 { grid-template-columns: 1fr 1fr; }
+      .img-gallery.cols-2-asymmetric { grid-template-columns: 1fr; }
     }
 
     /* ── Skills ── */
@@ -495,6 +826,7 @@
     .project:nth-child(2) { animation-delay: 0.10s; }
     .project:nth-child(3) { animation-delay: 0.15s; }
     .project:nth-child(4) { animation-delay: 0.20s; }
+    .project:nth-child(5) { animation-delay: 0.25s; }
     .exp-item:nth-child(1) { animation-delay: 0.05s; }
     .exp-item:nth-child(2) { animation-delay: 0.10s; }
     .exp-item:nth-child(3) { animation-delay: 0.15s; }
@@ -503,8 +835,10 @@
     @media (max-width: 600px) {
       .container { padding: 2.5rem 1.2rem 4rem; }
       .project, .exp-item { padding: 1.2rem; }
-      .exp-item { grid-template-columns: 1fr; }
+      .exp-item:not(.expandable) { grid-template-columns: 1fr; }
+      .exp-item.expandable .exp-top { grid-template-columns: 1fr; }
       .exp-date { text-align: left; width: fit-content; }
+      .findings-grid { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
@@ -532,7 +866,9 @@
   <p class="section-label">Projects</p>
   <div class="projects">
 
-    <div class="project">
+    <!-- 1: The Cost of Certainty -->
+    <div class="project" onclick="toggleProject(this)">
+      <div class="expand-icon">▾</div>
       <div class="project-header">
         <span class="project-title">The Cost of Certainty</span>
         <span class="project-date">Mar 2026 &ndash; May 2026</span>
@@ -540,8 +876,8 @@
       <p class="project-desc">
         Investigated how domain-specific fine-tuning degrades epistemic calibration in LLMs.
         Built a 100-question legal benchmark across four stress-test tiers and characterized
-        a &ldquo;fine-tuning confidence trap&rdquo; where domain adaptation suppresses model humility.
-        Found LoRA perplexity is a fundamentally unreliable abstention signal (AUROC 0.512 vs RAG&rsquo;s 0.854).
+        a &ldquo;fine-tuning confidence trap&rdquo; in which domain adaptation suppresses model humility.
+        Found that LoRA perplexity is a fundamentally unreliable abstention signal (AUROC 0.512 vs. RAG&rsquo;s 0.854).
       </p>
       <div class="project-stats">
         <span class="stat">fabrication 9.2% &rarr; 38.1% post-LoRA</span>
@@ -556,18 +892,89 @@
         <span class="tag">GPT-4o</span>
         <span class="tag">RAG</span>
       </div>
+
+      <div class="project-details">
+        <div class="details-inner">
+          <div>
+            <p class="details-section-title">Overview</p>
+            <p class="details-text">
+              A COS 484 (NLP) final project with co-authors Faith Best and Kaitlyn Wen. We evaluated
+              whether a smaller open-weight model (Llama-3.1-8B-Instruct) fine-tuned with LoRA could
+              outperform GPT-4o with RAG on legal question answering in terms of reliability — using the
+              2025 U.S. House Oversight Epstein Estate documents (2.1M rows, 25,000+ files) as the test corpus.
+            </p>
+          </div>
+          <div>
+            <p class="details-section-title">Key Findings</p>
+            <div class="findings-grid">
+              <div class="finding-card">
+                <div class="finding-value">38.1%</div>
+                <div class="finding-label">Fabrication rate post-LoRA (up from 9.2% baseline)</div>
+              </div>
+              <div class="finding-card">
+                <div class="finding-value">0.40</div>
+                <div class="finding-label">Abstention recall after fine-tuning (down from 0.92)</div>
+              </div>
+              <div class="finding-card">
+                <div class="finding-value">0.854</div>
+                <div class="finding-label">RAG AUROC for abstention vs LoRA's 0.512</div>
+              </div>
+              <div class="finding-card">
+                <div class="finding-value">0.74</div>
+                <div class="finding-label">RAG hit rate at k=30 with verification gate</div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="details-section-title">Approach</p>
+            <div class="approach-list">
+              <div class="approach-item"><div class="approach-dot"></div>Built a 100-question benchmark stratified across four difficulty tiers: Direct, Multi-Document, Redacted, and Trick questions</div>
+              <div class="approach-item"><div class="approach-dot"></div>Developed a granular error taxonomy (Fabrication, Misattribution, False Legal Inference, Over-Abstention, Chunk Boundary) to profile failure modes qualitatively</div>
+              <div class="approach-item"><div class="approach-dot"></div>Fine-tuned Llama-3.1-8B-Instruct with LoRA (rank 32, lr 5×10⁻⁵, 1 epoch) on 25,000 documents to avoid overwriting Meta's RLHF pretraining</div>
+              <div class="approach-item"><div class="approach-dot"></div>RAG pipeline: BM25 retrieval over 2.1M rows, reranked to top-k, with a confidence-gated forced abstention mechanism</div>
+              <div class="approach-item"><div class="approach-dot"></div>Core finding: fine-tuning creates a "confidence trap" — the model shifts from cautious over-abstention to authoritative fabrication, suppressing epistemic humility</div>
+            </div>
+          </div>
+
+          <!-- ═══ IMAGES — Cost of Certainty ═══════════════════════════════
+               Suggested: 3 images (error taxonomy bar charts per model)
+               Layout options: cols-3  |  cols-banner-then-2
+               Replace src="..." with your actual image paths.
+               Delete this block entirely if you have no images yet.
+          <div>
+            <p class="details-section-title">Figures</p>
+            <div class="img-gallery cols-3">
+              <div class="img-item">
+                <img src="images/certainty-llama-baseline.png" alt="Llama baseline error profile" />
+                <p class="img-caption">Llama Baseline — error distribution dominated by over-abstention</p>
+              </div>
+              <div class="img-item">
+                <img src="images/certainty-lora.png" alt="LoRA fine-tuned error profile" />
+                <p class="img-caption">LoRA Fine-Tuned — fabrication becomes primary failure mode</p>
+              </div>
+              <div class="img-item">
+                <img src="images/certainty-rag.png" alt="RAG GPT-4o error profile" />
+                <p class="img-caption">GPT-4o RAG — highest accuracy but false legal interference present</p>
+              </div>
+            </div>
+          </div>
+          ════════════════════════════════════════════════════════════════ -->
+        </div>
+      </div>
     </div>
 
-    <div class="project">
+    <!-- 2: Break Point -->
+    <div class="project" onclick="toggleProject(this)">
+      <div class="expand-icon">▾</div>
       <div class="project-header">
         <span class="project-title">Break Point</span>
         <span class="project-date">Feb 2026 &ndash; Apr 2026</span>
       </div>
       <p class="project-desc">
-        Dual-modality breakdance move classifier using video (MediaPipe landmarks) and
-        wearable IMU sensors (Sony mocopi). Transformer-only for video, BiLSTM + Transformer
-        for IMU data, across 15 move classes. Real-time sliding-window inference with
-        per-window confidence scoring.
+        Dual-modality breakdance move classifier combining video (MediaPipe landmarks) with
+        wearable IMU sensors (Sony mocopi). Uses a Transformer encoder for video and a
+        BiLSTM + Transformer hybrid for IMU data, across 15 move classes. Supports real-time
+        sliding-window inference with per-window confidence scoring.
       </p>
       <div class="project-stats">
         <span class="stat">video 98.8% val acc</span>
@@ -583,16 +990,95 @@
         <span class="tag">Transformer</span>
         <span class="tag">BiLSTM</span>
       </div>
+
+      <div class="project-details">
+        <div class="details-inner">
+          <div>
+            <p class="details-section-title">Overview</p>
+            <p class="details-text">
+              An independent work report (Spring 2026) advised by Kyle Jamieson. Break Point classifies
+              breakdancing moves in a set using two complementary modalities: computer vision via MediaPipe
+              landmark extraction, and Sony mocopi IMU sensors (12-sensor Pro Kit, 60 Hz). The original
+              goal was to compare novice and seasoned breakers, but the project pivoted to move
+              classification following IRB delays. Fifteen move classes were defined across three
+              categories: Toprock (Open Step, Cross Step, Kick Step, Kickcross Step, Shuffle), Floorwork
+              (CC, Hook, Sweep, 6-Step, 3-Step, Short Drop, Long Drop), and Freezes (Standing Arms
+              Open, Standing Arms Closed, Baby Freeze, Turtle Freeze).
+            </p>
+          </div>
+          <div>
+            <p class="details-section-title">Key Results</p>
+            <div class="findings-grid">
+              <div class="finding-card">
+                <div class="finding-value">98.8%</div>
+                <div class="finding-label">CV + Transformer validation accuracy</div>
+              </div>
+              <div class="finding-card">
+                <div class="finding-value">100%</div>
+                <div class="finding-label">IMU + BiLSTM/Transformer validation accuracy</div>
+              </div>
+              <div class="finding-card">
+                <div class="finding-value">15</div>
+                <div class="finding-label">Breaking move classes across toprock, floorwork &amp; freezes</div>
+              </div>
+              <div class="finding-card">
+                <div class="finding-value">80-frame</div>
+                <div class="finding-label">Sliding window size for real-time inference</div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="details-section-title">Approach</p>
+            <div class="approach-list">
+              <div class="approach-item"><div class="approach-dot"></div>CV pipeline: MediaPipe Pose for 33-landmark extraction per frame, fed into a Transformer encoder for temporal sequence classification</div>
+              <div class="approach-item"><div class="approach-dot"></div>IMU pipeline: Sony mocopi 12-sensor body suit providing joint-level positional data (MCPRW + BVH formats), processed with a BiLSTM + Transformer hybrid</div>
+              <div class="approach-item"><div class="approach-dot"></div>Real-time inference via 80-frame sliding windows with per-window confidence scores — enables live set annotation</div>
+              <div class="approach-item"><div class="approach-dot"></div>Key insight: moves contain other moves (e.g. 6-Step is a loop of Short Drop → Hook → Long Drops), creating compositional classification challenges</div>
+              <div class="approach-item"><div class="approach-dot"></div>CV outperforms IMU on generalization due to landmark calibration precision; IMU suffers from sensor drift in extended sessions</div>
+            </div>
+          </div>
+
+          <!-- ═══ IMAGES — Break Point ═════════════════════════════════════
+               Suggested: 4 images (sensor setup, MediaPipe overlay, confusion matrix, IMU drift chart)
+               Layout options: cols-4  |  cols-banner-then-3  |  cols-2 (two rows)
+               Replace src="..." with your actual image paths.
+               Delete this block entirely if you have no images yet.
+          <div>
+            <p class="details-section-title">Figures</p>
+            <div class="img-gallery cols-banner-then-3">
+              <div class="img-item">
+                <img src="images/breakpoint-sensor-setup.jpg" alt="Sony mocopi sensor placement" />
+                <p class="img-caption">Sony mocopi Pro Kit — 12 IMU sensors across body joints at 60 Hz</p>
+              </div>
+              <div class="img-item">
+                <img src="images/breakpoint-mediapipe.png" alt="MediaPipe landmark overlay" />
+                <p class="img-caption">MediaPipe 33-landmark skeleton extraction for CV pipeline</p>
+              </div>
+              <div class="img-item">
+                <img src="images/breakpoint-confusion.png" alt="Confusion matrix" />
+                <p class="img-caption">CV model confusion matrix across 15 move classes</p>
+              </div>
+              <div class="img-item">
+                <img src="images/breakpoint-drift.png" alt="IMU sensor drift" />
+                <p class="img-caption">IMU sensor drift accumulation during extended sessions</p>
+              </div>
+            </div>
+          </div>
+          ════════════════════════════════════════════════════════════════ -->
+        </div>
+      </div>
     </div>
 
-    <div class="project">
+    <!-- 3: Skill Issue -->
+    <div class="project" onclick="toggleProject(this)">
+      <div class="expand-icon">▾</div>
       <div class="project-header">
         <span class="project-title">Skill Issue</span>
         <span class="project-date">Jan 2026</span>
       </div>
       <p class="project-desc">
         Full-stack platform that analyzes player habits and weaknesses across hundreds of chess
-        matches. Uses HDBSCAN clustering and Lasso regression to extract mistake patterns from
+        matches. Uses HDBSCAN clustering and LASSO regression to extract mistake patterns from
         feature vectors of historical game data, then delivers personalized AI-generated feedback.
       </p>
       <div class="tags">
@@ -604,17 +1090,167 @@
         <span class="tag">HDBSCAN</span>
         <span class="tag">OpenAI API</span>
       </div>
+
+      <div class="project-details">
+        <div class="details-inner">
+          <div>
+            <p class="details-section-title">Overview</p>
+            <p class="details-text">
+              An independent work report (Fall 2025) advised by Robert Fish. Skill Issue is a web app
+              that goes beyond Chess.com's "Insights" feature by identifying game-state-specific bad habits
+              — not just raw mistake percentages. Users sign in with Google, link their Chess.com account,
+              and the pipeline automatically pulls PGN game files, runs Stockfish centipawn loss analysis,
+              encodes board positions as feature vectors, clusters them with HDBSCAN, finds contextual
+              correlations via LASSO regression, and generates personalized LLM feedback. Targets the
+              $3.34B global chess market and 1.5M+ Chess.com premium subscribers.
+            </p>
+          </div>
+          <div>
+            <p class="details-section-title">Pipeline</p>
+            <div class="approach-list">
+              <div class="approach-item"><div class="approach-dot"></div><strong>Step 1 — Move Analysis:</strong> Fetch PGN files from Chess.com API, replay games move-by-move, evaluate each position with Stockfish (centipawn loss), classify mistake severity</div>
+              <div class="approach-item"><div class="approach-dot"></div><strong>Step 2 — Feature Vectors:</strong> Encode board state per mistake move (piece mobility, king safety, pawn structure, castling state, material balance, etc.) into dense feature vectors</div>
+              <div class="approach-item"><div class="approach-dot"></div><strong>Step 3 — Habit Detection:</strong> HDBSCAN clusters mistake vectors across hundreds of games; LASSO regression identifies which board features most predict each cluster (contextual habit)</div>
+              <div class="approach-item"><div class="approach-dot"></div><strong>Step 4 — Feedback Generation:</strong> LLM (OpenAI) prompted with cluster context and LASSO-identified features to generate specific, actionable improvement advice</div>
+              <div class="approach-item"><div class="approach-dot"></div>Full-stack: React + Vite frontend, Python Flask API, PostgreSQL on AWS — designed as freemium SaaS with limited free tier and paid habit analysis</div>
+            </div>
+          </div>
+
+          <!-- ═══ IMAGES — Skill Issue ══════════════════════════════════════
+               Suggested: 2–3 images (app screenshot, feature vector diagram, HDBSCAN cluster plot)
+               Layout options: cols-2  |  cols-3  |  cols-2-asymmetric
+               Replace src="..." with your actual image paths.
+               Delete this block entirely if you have no images yet.
+          <div>
+            <p class="details-section-title">Figures</p>
+            <div class="img-gallery cols-2-asymmetric">
+              <div class="img-item tall">
+                <img src="images/skillissue-app.png" alt="Skill Issue app screenshot" />
+                <p class="img-caption">Skill Issue dashboard — habit report for a linked Chess.com account</p>
+              </div>
+              <div class="img-item">
+                <img src="images/skillissue-clusters.png" alt="HDBSCAN cluster visualization" />
+                <p class="img-caption">HDBSCAN clusters of mistake feature vectors across 200+ games</p>
+              </div>
+            </div>
+          </div>
+          ════════════════════════════════════════════════════════════════ -->
+        </div>
+      </div>
     </div>
 
-    <div class="project">
+    <!-- 4: Hierarchical Gaussian Filters -->
+    <div class="project" onclick="toggleProject(this)">
+      <div class="expand-icon">▾</div>
+      <div class="project-header">
+        <span class="project-title">Mindset &amp; Volatility</span>
+        <span class="project-date">Apr 2026 &ndash; May 2026</span>
+      </div>
+      <p class="project-desc">
+        Modeled fixed vs. growth mindset as a static parameter in a three-level Hierarchical
+        Gaussian Filter (HGF) to study how each mindset adapts to volatile environments.
+        Growth mindset agents showed up to 266% higher dynamic learning rates in highly
+        volatile conditions, with significantly better accuracy.
+      </p>
+      <div class="project-stats">
+        <span class="stat">DLR +266% in volatile phase</span>
+        <span class="stat">accuracy +18.8% volatile early</span>
+        <span class="stat">parameter recovery r=0.979</span>
+      </div>
+      <div class="tags">
+        <span class="tag">Python</span>
+        <span class="tag">Bayesian Inference</span>
+        <span class="tag">HGF</span>
+        <span class="tag">Computational Psychiatry</span>
+        <span class="tag">R</span>
+      </div>
+
+      <div class="project-details">
+        <div class="details-inner">
+          <div>
+            <p class="details-section-title">Overview</p>
+            <p class="details-text">
+              A PSY 360 (Computational Cognitive Science) final project advised by Professor Brenden Lake.
+              The project asks whether Carol Dweck's fixed and growth mindset theory can be formalized
+              as a computational model of cognition. Using a three-level Hierarchical Gaussian Filter —
+              a Bayesian framework for modeling belief updates under uncertainty — mindset is encoded as
+              a static volatility parameter (θ₃) that governs how an agent weighs new information against
+              its prior beliefs. Agents then complete a 300-trial reward task with three distinct phases:
+              a stable phase, a reversed stable phase, and a volatile phase in which the reward probability
+              flips every 3–6 trials.
+            </p>
+          </div>
+          <div>
+            <p class="details-section-title">Key Results</p>
+            <div class="findings-grid">
+              <div class="finding-card">
+                <div class="finding-value">+266%</div>
+                <div class="finding-label">Growth vs. fixed mindset dynamic learning rate in the late volatile phase</div>
+              </div>
+              <div class="finding-card">
+                <div class="finding-value">+18.8%</div>
+                <div class="finding-label">Accuracy advantage for growth mindset in the early volatile phase (p &lt; 10⁻¹²)</div>
+              </div>
+              <div class="finding-card">
+                <div class="finding-value">0.979</div>
+                <div class="finding-label">Pearson correlation for parameter recovery — confirms model identifiability</div>
+              </div>
+              <div class="finding-card">
+                <div class="finding-value">3-level</div>
+                <div class="finding-label">HGF hierarchy: observation, volatility estimate, and meta-volatility</div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="details-section-title">Approach</p>
+            <div class="approach-list">
+              <div class="approach-item"><div class="approach-dot"></div>Implemented the full HGF update equations (Mathys et al., 2014) from scratch: precision-weighted prediction errors propagate upward through three hierarchical levels at each trial</div>
+              <div class="approach-item"><div class="approach-dot"></div>Mindset encoded as θ₃ — the meta-volatility prior. Fixed mindset (θ₃ = 1.5) assumes a stable world; growth mindset (θ₃ = −1.5) assumes the world is more changeable, yielding a higher dynamic learning rate</div>
+              <div class="approach-item"><div class="approach-dot"></div>300-trial binary reward task: stable (trials 1–80, Pr[reward] = 0.8), reversed stable (81–160, Pr[reward] = 0.2), and volatile (161–300, probability flips randomly every 3–6 trials)</div>
+              <div class="approach-item"><div class="approach-dot"></div>Statistical analysis via t-tests on dynamic learning rate and accuracy across all three blocks; growth mindset agents significantly outperform in both learning rate and accuracy during volatile conditions</div>
+              <div class="approach-item"><div class="approach-dot"></div>Parameter recovery confirms the model is identifiable: simulated parameters can be reliably recovered from generated behavior (Pearson r = 0.979, MAE = 0.582)</div>
+            </div>
+          </div>
+
+          <!-- ═══ IMAGES — Mindset & Volatility ════════════════════════════
+               Suggested: 2–3 images (learning rate trajectory, accuracy by block, parameter recovery scatter)
+               Layout options: cols-2  |  cols-3  |  cols-banner-then-2
+               Replace src="..." with your actual image paths.
+               Delete this block entirely if you have no images yet.
+          <div>
+            <p class="details-section-title">Figures</p>
+            <div class="img-gallery cols-3">
+              <div class="img-item">
+                <img src="images/hgf-fixed-agent.png" alt="Fixed mindset agent trajectories" />
+                <p class="img-caption">Fixed mindset — belief and learning rate across 300 trials</p>
+              </div>
+              <div class="img-item">
+                <img src="images/hgf-growth-agent.png" alt="Growth mindset agent trajectories" />
+                <p class="img-caption">Growth mindset — higher DLR in volatile phase (trials 161–300)</p>
+              </div>
+              <div class="img-item">
+                <img src="images/hgf-param-recovery.png" alt="Parameter recovery scatter plot" />
+                <p class="img-caption">Parameter recovery: Pearson r = 0.979, confirming model identifiability</p>
+              </div>
+            </div>
+          </div>
+          ════════════════════════════════════════════════════════════════ -->
+        </div>
+      </div>
+    </div>
+
+    <!-- 5: Déjà Vu -->
+    <div class="project" onclick="toggleProject(this)">
+      <div class="expand-icon">▾</div>
       <div class="project-header">
         <span class="project-title">Déjà Vu</span>
         <span class="project-date">Dec 2025</span>
       </div>
       <p class="project-desc">
-        Fully playable 2.5D platformer built from scratch with Three.js. Features Z-axis
-        layer-switching mechanics allowing players and enemy AI to move between foreground
-        and background environments, with dynamic shadow tracking and custom shader implementations.
+        Fully playable 2.5D platformer built from scratch with Three.js. Features a Z-axis
+        layer-switching mechanic that lets both the player and enemy AI transition between
+        foreground and background environments, with dynamic shadow tracking and custom
+        GLSL shader implementations.
       </p>
       <div class="tags">
         <span class="tag">Javascript</span>
@@ -623,10 +1259,68 @@
         <span class="tag">HTML/CSS</span>
         <span class="tag">GitHub Pages</span>
       </div>
-      <a class="project-link" href="https://simothy03.github.io/dejavu-hosted/" target="_blank">
+      <a class="project-link" href="https://simothy03.github.io/dejavu-hosted/" target="_blank" onclick="event.stopPropagation()">
         <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
         play on github pages
       </a>
+
+      <div class="project-details">
+        <div class="details-inner">
+          <div>
+            <p class="details-section-title">Overview</p>
+            <p class="details-text">
+              A COS 426 (Computer Graphics) final project. Déjà Vu is a fully playable 2.5D platformer
+              built entirely from scratch using Three.js and GLSL shaders — no game engine. The core
+              innovation is a Z-axis layer-switching mechanic where both the player character and enemy AI
+              can transition between a foreground and background plane, creating depth-based puzzle and
+              combat gameplay.
+            </p>
+          </div>
+          <div>
+            <p class="details-section-title">Technical Details</p>
+            <div class="approach-list">
+              <div class="approach-item"><div class="approach-dot"></div>Custom GLSL vertex and fragment shaders for dynamic lighting, shadow projection, and the visual depth-shift effect during Z-axis transitions</div>
+              <div class="approach-item"><div class="approach-dot"></div>Enemy AI built from scratch — adversaries track player position across layers and coordinate attacks across the foreground/background divide</div>
+              <div class="approach-item"><div class="approach-dot"></div>Dynamic shadow system that re-renders shadow geometry in real time as the player switches depth planes</div>
+              <div class="approach-item"><div class="approach-dot"></div>Fully browser-native — hosted on GitHub Pages with no backend, runs purely in WebGL via Three.js</div>
+            </div>
+          </div>
+
+          <!-- ═══ IMAGES — Déjà Vu ══════════════════════════════════════════
+               Suggested: 2–4 images (gameplay screenshots, shader effect, enemy AI, layer-switch moment)
+               Layout options: cols-2  |  cols-4  |  cols-banner-then-3
+               Replace src="..." with your actual image paths.
+               Delete this block entirely if you have no images yet.
+          <div>
+            <p class="details-section-title">Screenshots</p>
+            <div class="img-gallery cols-banner-then-3">
+              <div class="img-item short">
+                <img src="images/dejavu-banner.png" alt="Déjà Vu gameplay wide shot" />
+                <p class="img-caption">The 2.5D world — foreground and background planes visible simultaneously</p>
+              </div>
+              <div class="img-item">
+                <img src="images/dejavu-shader.png" alt="GLSL depth-shift shader effect" />
+                <p class="img-caption">Custom GLSL shader during Z-axis layer transition</p>
+              </div>
+              <div class="img-item">
+                <img src="images/dejavu-enemy.png" alt="Enemy AI tracking across layers" />
+                <p class="img-caption">Enemy AI tracking the player across the foreground/background divide</p>
+              </div>
+              <div class="img-item">
+                <img src="images/dejavu-shadows.png" alt="Dynamic shadow system" />
+                <p class="img-caption">Dynamic shadows re-rendered in real time on layer switch</p>
+              </div>
+            </div>
+          </div>
+          ════════════════════════════════════════════════════════════════ -->
+          <div class="detail-links">
+            <a class="project-link" href="https://simothy03.github.io/dejavu-hosted/" target="_blank">
+              <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+              play it live
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -635,10 +1329,83 @@
   <p class="section-label">Experience</p>
   <div class="experience">
 
-    <div class="exp-item">
-      <span class="exp-role">Full Stack Software Intern &mdash; HMEI Villarini Research Group</span>
-      <span class="exp-date">Summer 2025</span>
-      <span class="exp-org">Princeton University &middot; Python Flask, PostgreSQL, JavaScript</span>
+    <div class="exp-item expandable" onclick="toggleExp(this)">
+      <div class="exp-top">
+        <span class="exp-role">Full Stack Software Intern &mdash; HMEI Villarini Research Group</span>
+        <span class="exp-date">Summer 2025</span>
+        <div class="exp-expand-icon">▾</div>
+        <span class="exp-org">Princeton University &middot; Python Flask, PostgreSQL, JavaScript, Pandas, SciPy</span>
+      </div>
+      <div class="exp-details">
+        <div class="exp-details-inner">
+          <div>
+            <p class="details-section-title">About the Lab</p>
+            <p class="details-text">
+              The <a href="https://villarini.scholar.princeton.edu" target="_blank" style="color:var(--lilac);text-decoration:none;" onclick="event.stopPropagation()">Villarini Research Group</a> at Princeton's High Meadows Environmental Institute (HMEI)
+              studies flood hydrology, extreme weather events, hydroclimatology, and seasonal climate
+              prediction. Led by Professor Gabriele Villarini (CEE &amp; HMEI), the group builds
+              statistical-dynamical forecasting systems that integrate outputs from global climate models
+              to predict North Atlantic tropical cyclone activity months in advance.
+            </p>
+          </div>
+          <div>
+            <p class="details-section-title">What I Built</p>
+            <div class="approach-list">
+              <div class="approach-item"><div class="approach-dot"></div><strong>Multi-model forecasting system:</strong> Integrated sea surface temperature (SST) outputs from 11 operational climate centers — ECMWF, NMME NASA, NMME NCEP, BOM, CMCC, DWD, ECCC, JMA, Météo-France, NCEP, and the UK Met Office — via the Copernicus Climate Data Store (CDS) API and NMME portal</div>
+              <div class="approach-item"><div class="approach-dot"></div><strong>Statistical regression models:</strong> Applied Poisson regression to predict tropical cyclone (TC) and hurricane (HU) counts, and Gamma regression to predict Power Dissipation Index (PDI) and Accumulated Cyclone Energy (ACE), using North Atlantic and tropical SST anomalies (SSTMDR and SSTTROP) as predictors</div>
+              <div class="approach-item"><div class="approach-dot"></div><strong>Multi-Model Ensemble (MME):</strong> Built three ensemble weighting schemes — equal-weighted average, RMSE-weighted average, and hierarchical — that users can switch between or manually configure per-model weights on the site</div>
+              <div class="approach-item"><div class="approach-dot"></div><strong>Automated forecast verification:</strong> Implemented CRPS, Brier Score, Decomposed MSE Skill Score, ROC curves, PIT histograms, reliability diagrams, and 3×3 contingency tables via Pandas and SciPy — enabling systematic comparison of model predictive accuracy across initialization months going back to 1952</div>
+              <div class="approach-item"><div class="approach-dot"></div><strong>Automated data pipeline:</strong> Wrote Selenium scrapers and CDS API wrappers to auto-ingest monthly SST forecasts, HURDAT2 storm records (via the Tropycal API), and HadISST1 observed SST data on rolling schedules throughout the hurricane season (Aug–Oct)</div>
+              <div class="approach-item"><div class="approach-dot"></div><strong>Full-stack website:</strong> Built the researcher-facing interface with Flask and PostgreSQL — dynamic time-series charts, interactive ensemble configuration, and on-demand retrospective forecast generation. Validated against HURDAT2 observed data from 1952 to 2024</div>
+            </div>
+          </div>
+          <div>
+            <p class="details-section-title">Key Metrics</p>
+            <div class="findings-grid">
+              <div class="finding-card">
+                <div class="finding-value">11</div>
+                <div class="finding-label">Operational climate centers integrated (ECMWF, NMME, BOM, DWD, and more)</div>
+              </div>
+              <div class="finding-card">
+                <div class="finding-value">1952–2024</div>
+                <div class="finding-label">Historical observed data range for validation and retrospective forecasts</div>
+              </div>
+              <div class="finding-card">
+                <div class="finding-value">4</div>
+                <div class="finding-label">Forecast targets: TC count, HU count, PDI, and ACE</div>
+              </div>
+              <div class="finding-card">
+                <div class="finding-value">7+</div>
+                <div class="finding-label">Verification metrics implemented (CRPS, Brier Score, Skill Score, ROC, PIT, reliability, contingency)</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ═══ IMAGES — HMEI Villarini ══════════════════════════════════
+               Suggested: 2–3 images (website screenshot, forecast chart, database schema)
+               Layout options: cols-2  |  cols-3  |  cols-banner-then-2
+               Replace src="..." with your actual image paths.
+               Delete this block entirely if you have no images yet.
+          <div>
+            <p class="details-section-title">Screenshots</p>
+            <div class="img-gallery cols-banner-then-2">
+              <div class="img-item short">
+                <img src="images/hmei-site.png" alt="Forecasting website screenshot" />
+                <p class="img-caption">The researcher-facing forecasting dashboard with dynamic time-series charts</p>
+              </div>
+              <div class="img-item">
+                <img src="images/hmei-forecast.png" alt="Seasonal forecast chart" />
+                <p class="img-caption">Multi-model ensemble forecast vs. HURDAT2 observed TC counts</p>
+              </div>
+              <div class="img-item">
+                <img src="images/hmei-schema.png" alt="PostgreSQL database schema" />
+                <p class="img-caption">PostgreSQL schema — GCM, ensemble members, SST forecasts, and observed data</p>
+              </div>
+            </div>
+          </div>
+          ════════════════════════════════════════════════════════════════ -->
+        </div>
+      </div>
     </div>
 
     <div class="exp-item">
@@ -706,5 +1473,15 @@
   </div>
 
 </div>
+
+<script>
+  function toggleProject(el) {
+    el.classList.toggle('open');
+  }
+  function toggleExp(el) {
+    el.classList.toggle('open');
+  }
+</script>
+
 </body>
 </html>
