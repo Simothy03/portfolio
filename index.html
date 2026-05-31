@@ -401,7 +401,7 @@
     }
 
     .project.open .project-details {
-      max-height: 1200px;
+      max-height: 4000px;
       opacity: 1;
     }
 
@@ -644,7 +644,7 @@
     }
 
     .exp-item.open .exp-details {
-      max-height: 1400px;
+      max-height: 4000px;
       opacity: 1;
     }
 
@@ -936,29 +936,34 @@
             </div>
           </div>
 
-          <!-- ═══ IMAGES — Cost of Certainty ═══════════════════════════════
-               Suggested: 3 images (error taxonomy bar charts per model)
-               Layout options: cols-3  |  cols-banner-then-2
-               Replace src="..." with your actual image paths.
-               Delete this block entirely if you have no images yet.
+          <!--IMAGES for COST OF CERTAINTY-->
           <div>
             <p class="details-section-title">Figures</p>
-            <div class="img-gallery cols-3">
-              <div class="img-item">
-                <img src="images/certainty-llama-baseline.png" alt="Llama baseline error profile" />
+            <div class="img-gallery cols-3" style="margin-bottom: 9px;">
+              <div class="img-item auto">
+                <img src="images/llama_baseline_error_donut.png" alt="Llama baseline error profile" />
                 <p class="img-caption">Llama Baseline — error distribution dominated by over-abstention</p>
               </div>
-              <div class="img-item">
-                <img src="images/certainty-lora.png" alt="LoRA fine-tuned error profile" />
+              <div class="img-item auto">
+                <img src="images/llama_finetuned_error_donut.png" alt="LoRA fine-tuned error profile" />
                 <p class="img-caption">LoRA Fine-Tuned — fabrication becomes primary failure mode</p>
               </div>
-              <div class="img-item">
-                <img src="images/certainty-rag.png" alt="RAG GPT-4o error profile" />
+              <div class="img-item auto">
+                <img src="images/rag_gpt4_error_donut.png" alt="RAG GPT-4o error profile" />
                 <p class="img-caption">GPT-4o RAG — highest accuracy but false legal interference present</p>
               </div>
             </div>
+            <div class="img-gallery cols-2">
+              <div class="img-item auto">
+                <img src="images/combined_tradeoff_curve.png" alt="tradeoff curves" />
+                <p class="img-caption">Accuracy-Abstention Tradeoff Curves</p>
+              </div>
+              <div class="img-item auto">
+                <img src="images/abstention_roc_comparison.png" alt="roc curves" />
+                <p class="img-caption">Abstention Classifier via ROC</p>
+              </div>
+            </div>
           </div>
-          ════════════════════════════════════════════════════════════════ -->
         </div>
       </div>
     </div>
@@ -1037,34 +1042,28 @@
               <div class="approach-item"><div class="approach-dot"></div>CV outperforms IMU on generalization due to landmark calibration precision; IMU suffers from sensor drift in extended sessions</div>
             </div>
           </div>
-
           <!-- ═══ IMAGES — Break Point ═════════════════════════════════════
-               Suggested: 4 images (sensor setup, MediaPipe overlay, confusion matrix, IMU drift chart)
-               Layout options: cols-4  |  cols-banner-then-3  |  cols-2 (two rows)
+               Suggested: 3–4 images (sensor setup, MediaPipe overlay, confusion matrix, drift plot)
+               Layout options: cols-2  |  cols-3  |  cols-2-asymmetric  |  cols-banner-then-2
                Replace src="..." with your actual image paths.
-               Delete this block entirely if you have no images yet.
+               Delete this block entirely if you have no images yet. -->
           <div>
             <p class="details-section-title">Figures</p>
-            <div class="img-gallery cols-banner-then-3">
-              <div class="img-item">
-                <img src="images/breakpoint-sensor-setup.jpg" alt="Sony mocopi sensor placement" />
-                <p class="img-caption">Sony mocopi Pro Kit — 12 IMU sensors across body joints at 60 Hz</p>
+            <div class="img-gallery cols-banner-then-2">
+              <div class="img-item auto">
+                <img src="images/demonstration.jpg" alt="Demo Setup" />
+                <p class="img-caption">Setup for camera and Sony mocopi sensors</p>
               </div>
-              <div class="img-item">
-                <img src="images/breakpoint-mediapipe.png" alt="MediaPipe landmark overlay" />
+              <div class="img-item auto">
+                <img src="images/mediapipe_visual.png" alt="MediaPipe landmark overlay" />
                 <p class="img-caption">MediaPipe 33-landmark skeleton extraction for CV pipeline</p>
               </div>
-              <div class="img-item">
-                <img src="images/breakpoint-confusion.png" alt="Confusion matrix" />
-                <p class="img-caption">CV model confusion matrix across 15 move classes</p>
-              </div>
-              <div class="img-item">
-                <img src="images/breakpoint-drift.png" alt="IMU sensor drift" />
-                <p class="img-caption">IMU sensor drift accumulation during extended sessions</p>
+              <div class="img-item auto">
+                <img src="images/xyn_visual.png" alt="XYN Motion Studio Model" />
+                <p class="img-caption">XYN Motion Studio Model from mocopi sensors</p>
               </div>
             </div>
           </div>
-          ════════════════════════════════════════════════════════════════ -->
         </div>
       </div>
     </div>
@@ -1120,21 +1119,17 @@
                Suggested: 2–3 images (app screenshot, feature vector diagram, HDBSCAN cluster plot)
                Layout options: cols-2  |  cols-3  |  cols-2-asymmetric
                Replace src="..." with your actual image paths.
-               Delete this block entirely if you have no images yet.
-          <div>
-            <p class="details-section-title">Figures</p>
-            <div class="img-gallery cols-2-asymmetric">
-              <div class="img-item tall">
-                <img src="images/skillissue-app.png" alt="Skill Issue app screenshot" />
-                <p class="img-caption">Skill Issue dashboard — habit report for a linked Chess.com account</p>
-              </div>
-              <div class="img-item">
-                <img src="images/skillissue-clusters.png" alt="HDBSCAN cluster visualization" />
-                <p class="img-caption">HDBSCAN clusters of mistake feature vectors across 200+ games</p>
-              </div>
+               Delete this block entirely if you have no images yet. -->
+          <div class="img-gallery cols-2" style="align-items: center;">
+            <div class="img-item tall" style="margin: auto;">
+              <img src="images/chess_habits.png" alt="Skill Issue Feedback screenshot" />
+              <p class="img-caption">Example Skill Issue feedback for a linked Chess.com account</p>
+            </div>
+            <div class="img-item auto" style="max-width: 180px; margin: auto;">
+              <img src="images/Skill Issue Abbreviated Logo.png" alt="Skill Issue Logo" />
+              <p class="img-caption">Prototype Abbreviated Logo for Skill Issue</p>
             </div>
           </div>
-          ════════════════════════════════════════════════════════════════ -->
         </div>
       </div>
     </div>
@@ -1216,25 +1211,22 @@
                Suggested: 2–3 images (learning rate trajectory, accuracy by block, parameter recovery scatter)
                Layout options: cols-2  |  cols-3  |  cols-banner-then-2
                Replace src="..." with your actual image paths.
-               Delete this block entirely if you have no images yet.
+               Delete this block entirely if you have no images yet. -->
           <div>
             <p class="details-section-title">Figures</p>
-            <div class="img-gallery cols-3">
-              <div class="img-item">
-                <img src="images/hgf-fixed-agent.png" alt="Fixed mindset agent trajectories" />
+            <div class="img-gallery cols-1" style="margin-bottom: 10px;">
+              <div class="img-item auto">
+                <img src="images/single_agent_trace_Fixed_F_1.png" alt="Fixed mindset agent trajectories" />
                 <p class="img-caption">Fixed mindset — belief and learning rate across 300 trials</p>
               </div>
-              <div class="img-item">
-                <img src="images/hgf-growth-agent.png" alt="Growth mindset agent trajectories" />
-                <p class="img-caption">Growth mindset — higher DLR in volatile phase (trials 161–300)</p>
-              </div>
-              <div class="img-item">
-                <img src="images/hgf-param-recovery.png" alt="Parameter recovery scatter plot" />
-                <p class="img-caption">Parameter recovery: Pearson r = 0.979, confirming model identifiability</p>
+            </div>
+            <div class="img-gallery cols-1" >
+              <div class="img-item auto">
+                <img src="images/single_agent_trace_Growth_G_1.png" alt="Growth mindset agent trajectories" />
+                <p class="img-caption">Growth mindset — higher DLR in volatile phase (trials 161-300)</p>
               </div>
             </div>
           </div>
-          ════════════════════════════════════════════════════════════════ -->
         </div>
       </div>
     </div>
@@ -1290,29 +1282,23 @@
                Suggested: 2–4 images (gameplay screenshots, shader effect, enemy AI, layer-switch moment)
                Layout options: cols-2  |  cols-4  |  cols-banner-then-3
                Replace src="..." with your actual image paths.
-               Delete this block entirely if you have no images yet.
+               Delete this block entirely if you have no images yet. -->
           <div>
             <p class="details-section-title">Screenshots</p>
-            <div class="img-gallery cols-banner-then-3">
-              <div class="img-item short">
-                <img src="images/dejavu-banner.png" alt="Déjà Vu gameplay wide shot" />
+            <div class="img-gallery cols-1" style="margin-bottom: 9px;">
+              <div class="img-item auto">
+                <img src="images/dejavu_level.png" alt="Déjà Vu gameplay wide shot" />
                 <p class="img-caption">The 2.5D world — foreground and background planes visible simultaneously</p>
               </div>
-              <div class="img-item">
-                <img src="images/dejavu-shader.png" alt="GLSL depth-shift shader effect" />
-                <p class="img-caption">Custom GLSL shader during Z-axis layer transition</p>
-              </div>
-              <div class="img-item">
-                <img src="images/dejavu-enemy.png" alt="Enemy AI tracking across layers" />
-                <p class="img-caption">Enemy AI tracking the player across the foreground/background divide</p>
-              </div>
-              <div class="img-item">
-                <img src="images/dejavu-shadows.png" alt="Dynamic shadow system" />
-                <p class="img-caption">Dynamic shadows re-rendered in real time on layer switch</p>
+              
+            </div>
+            <div class="img-gallery cols-1">
+              <div class="img-item auto">
+                <img src="images/dejavu_character.png" alt="Déjà Vu Character Customization" />
+                <p class="img-caption">Character Customization Screen</p>
               </div>
             </div>
           </div>
-          ════════════════════════════════════════════════════════════════ -->
           <div class="detail-links">
             <a class="project-link" href="https://simothy03.github.io/dejavu-hosted/" target="_blank">
               <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
@@ -1385,25 +1371,25 @@
                Suggested: 2–3 images (website screenshot, forecast chart, database schema)
                Layout options: cols-2  |  cols-3  |  cols-banner-then-2
                Replace src="..." with your actual image paths.
-               Delete this block entirely if you have no images yet.
+               Delete this block entirely if you have no images yet. -->
           <div>
             <p class="details-section-title">Screenshots</p>
             <div class="img-gallery cols-banner-then-2">
-              <div class="img-item short">
-                <img src="images/hmei-site.png" alt="Forecasting website screenshot" />
-                <p class="img-caption">The researcher-facing forecasting dashboard with dynamic time-series charts</p>
+              <div class="img-item auto">
+                <img src="images/hmei_tc_metrics.png" alt="Forecasting website screenshot" />
+                <p class="img-caption">The researcher-facing forecasting dashboard showcasing key metrics for tropical cyclone forecasting, 
+                  frequencies of hurricane and tropical cyclones, power dissipation index, and accumulated cyclone energy</p>
               </div>
-              <div class="img-item">
-                <img src="images/hmei-forecast.png" alt="Seasonal forecast chart" />
-                <p class="img-caption">Multi-model ensemble forecast vs. HURDAT2 observed TC counts</p>
+              <div class="img-item auto">
+                <img src="images/hmei_skill_scores.png" alt="Skill Scores" />
+                <p class="img-caption">One of many metrics provided to the user: Decomposed MSE Skill Scores</p>
               </div>
-              <div class="img-item">
-                <img src="images/hmei-schema.png" alt="PostgreSQL database schema" />
+              <div class="img-item auto">
+                <img src="images/hmei_database_schema.png" alt="PostgreSQL database schema" />
                 <p class="img-caption">PostgreSQL schema — GCM, ensemble members, SST forecasts, and observed data</p>
               </div>
             </div>
           </div>
-          ════════════════════════════════════════════════════════════════ -->
         </div>
       </div>
     </div>
